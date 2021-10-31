@@ -15,6 +15,6 @@ MonoBehaviour:
   title: Salts
   author: BakersDozenBagels
   description: ~~I~~ He turned ~~my~~himself into a module, Morty!
-  version: 1.0
+  version: 1.2
   outputFolder: build
   previewImage: {fileID: 2800000, guid: 43f61deb919de2a4dafaad39cee8d794, type: 3}
