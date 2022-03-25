@@ -9,15 +9,27 @@ public class saltsScript : MonoBehaviour
     private int state = 0, count = 0;
 
     public KMSelectable button;
-    public Texture blan;
+    public Texture blan, tweet;
     public Renderer ghost;
     private Coroutine waiting;
 
     private int _id = ++_idc;
     private static int _idc;
 
+    private const string MISSION_ID = "mod_twitterForAndroid_tfa";
+
+    private bool _isTFA;
+
     void Start()
     {
+        if(KTMissionGetter.Mission.ID == MISSION_ID)
+        {
+            _isTFA = true;
+            ghost.material.mainTexture = tweet;
+            Debug.LogFormat("[Salts #{0}] This Salts is secretly Twitter. It will solve automatically at the end of the other bomb.", _id);
+            return;
+        }
+
         int sum = 0;
         foreach(int i in KMBombInfoExtensions.GetSerialNumberNumbers(GetComponent<KMBombInfo>()))
             sum += i;
@@ -31,6 +43,8 @@ public class saltsScript : MonoBehaviour
 
     private bool Press()
     {
+        if(_isTFA)
+            return false;
         GetComponent<KMSelectable>().AddInteractionPunch(0.1f);
         if(waiting != null)
             StopCoroutine(waiting);
@@ -87,6 +101,8 @@ public class saltsScript : MonoBehaviour
 #pragma warning restore 414
     private IEnumerator ProcessTwitchCommand(string command)
     {
+        if(_isTFA)
+            yield break;
         Match m;
         if((m = Regex.Match(command, @"^\s*blan\s*jumpscare\s*$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant)).Success)
             ghost.material.mainTexture = blan;
@@ -106,6 +122,9 @@ public class saltsScript : MonoBehaviour
 
     private IEnumerator TwitchHandleForcedSolve()
     {
+        if(_isTFA)
+            yield break;
+
         while(waiting != null)
             yield return true;
         yield return null;
