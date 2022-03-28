@@ -36,7 +36,7 @@ public class saltsScript : MonoBehaviour
         answer1 = sum / 5;
         answer2 = sum % 5;
 
-        Debug.LogFormat("[Salts #{0}] Tap the ghost {1} times, then {2} times.", _id, answer1, answer2);
+        Debug.LogFormat("[Salts #{0}] Tap the ghost {1} times, then {2} times.", _id, answer1 + 1, answer2 + 1);
 
         button.OnInteract += Press;
     }
